@@ -1,0 +1,33 @@
+<?php
+$position = $this->getPosition();
+?>
+
+<?php if(Mage::helper('instantsearch/data')->isEnabled()):?>
+	<?php foreach ($position as $pos):?>
+		<?php switch($pos['title']): case product: ?>
+			<?php if(Mage::helper('instantsearch/data')->isProductSearchEnabled()):?>
+				<div class="instantsearch-group">
+					<?= $this->getSearchProductHtml('dropdown');?>
+				</div>
+			<?php endif?>
+		<?php break; case category :?>	
+			<?php if(Mage::helper('instantsearch/data')->isCategorySearchEnabled()):?>
+				<div class="instantsearch-group">
+					<?= $this->getSearchCategoryHtml('dropdown');?>
+				</div>
+			<?php endif?>
+		<?php break; case cms :?>
+			<?php if(Mage::helper('instantsearch/data')->isCmsSearchEnabled()):?>
+				<div class="instantsearch-group">	
+					<?= $this->getSearchCMSHtml('dropdown');?>
+				</div>
+			<?php endif;?>
+		<?php break; case blog :?>
+			<?php if(Mage::helper('instantsearch/data')->isBlogSearchEnabled()):?>
+				<div class="instantsearch-group">
+					<?= $this->getSearchBlogHtml('dropdown');?>
+				</div>
+			<?php endif;?>
+		<?php break; endswitch; ?>
+	<?php endforeach?>
+<?php endif?>

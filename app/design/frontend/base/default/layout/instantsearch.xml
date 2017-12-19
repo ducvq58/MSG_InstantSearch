@@ -1,0 +1,23 @@
+<?xml version="1.0"?>
+<layout>
+	<default>
+		<reference name="head">
+			<action method="addCss">
+				<stylesheet>css/instantsearch/instantsearch.css</stylesheet>
+			</action>
+		</reference>
+		<reference name="content">
+            <block type="core/template" name="instantsearch_init" template="instantsearch/instantsearch_init.phtml" />
+        </reference>
+    </default>
+    <instantsearch_ajax_index>
+    	<reference name="content">
+    		<block type="instantsearch/instantsearch" name="instantsearch_ajax" template="instantsearch/search.phtml" output="toHtml" />
+    	</reference>
+    </instantsearch_ajax_index>
+    <instantsearch_index_index>
+    	<reference name="content">
+    		<block type="instantsearch/instantsearch" name="instantsearch" template="instantsearch/instantsearch.phtml" />
+    	</reference>
+    </instantsearch_index_index>
+</layout>

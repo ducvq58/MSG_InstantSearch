@@ -1,0 +1,15 @@
+<?php
+$isBlogEnable = Mage::getConfig()->getModuleConfig('AW_Blog')->is('active', 'true');
+?>
+<script type="text/javascript">
+	isBlogEnable = '<?php echo $isBlogEnable;?>';
+	window.onload = function(){
+		if (!Boolean(isBlogEnable)) {
+			var element = document.getElementById("instantsearch_blog_search");
+			element.parentElement.removeChild(element);
+			document.getElementById("instantsearch_blog_search-head").innerHTML="Blog Search is not installed or not enable";
+			
+		}
+	}
+	
+</script>

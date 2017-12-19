@@ -1,0 +1,77 @@
+<?php 
+	$gif_url = Mage::getBaseUrl(Mage_Core_Model_Store::URL_TYPE_MEDIA)."/instantsearch/ajax-loader.gif";
+?>
+<script type="text/javascript">
+	window.onload = function(){
+		document.getElementById('search_mini_form').action = "<?php echo Mage::getUrl('instantsearch/')?>";
+		
+		var dropdown = document.createElement('div');
+		dropdown.setAttribute('id', 'search-dropdown');
+		dropdown.style.display = 'none';
+		document.getElementById('search_mini_form').insertAdjacentElement('afterend', dropdown);
+
+		var loading_gif = document.createElement('div');
+		loading_gif.setAttribute('id', 'loading_gif');
+		loading_gif.style.display = 'none';
+		loading_gif.innerHTML = '<img src="<?php echo $gif_url?>">';
+		document.getElementById('search').insertAdjacentElement('afterend', loading_gif);
+
+		
+		
+		var search_box = document.getElementById('search');
+		search_box.onkeyup = function(){
+			if (dropdown.style.display == 'none') {
+				dropdown.style.display = 'block';
+			}
+			if (search_box.value == "") {
+				loading_gif.style.display = 'none';
+				dropdown.style.display = 'none';
+				dropdown.innerHTML="";
+			}
+			else{
+				instantsearch(this.value);
+			}
+			
+		};
+	}
+
+
+
+	document.onclick = function(){
+		var dropdown = document.getElementById('search-dropdown');
+		var search_box = document.getElementById('search');
+		var target = event.target || event.srcElement;
+		if (!checkParent(target, dropdown)){
+			loading_gif.style.display = 'none';
+			dropdown.style.display = 'none';
+			dropdown.innerHTML="";
+		}
+	}
+
+
+	function checkParent(t, elm) {
+	  while(t.parentNode) {
+	    if( t == elm ) {return true;}
+	    t = t.parentNode;
+	  }
+	  return false;
+	}
+	
+	var xmlhttp;
+
+	function instantsearch(str){
+		loading_gif.style.display = 'block';
+		if(xmlhttp && xmlhttp.readystate != 4) {
+            xmlhttp.abort();
+        }
+		xmlhttp = new XMLHttpRequest();
+		xmlhttp.onreadystatechange=function() {
+			if (this.readyState==4 && this.status==200) {
+				loading_gif.style.display = 'none';
+				document.getElementById("search-dropdown").innerHTML=this.responseText;
+			}
+		}
+		xmlhttp.open("GET","<?php echo Mage::getUrl('instantsearch/ajax/index/');?>"+"?q="+str,true);
+  		xmlhttp.send();
+	}
+</script>

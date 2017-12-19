@@ -1,0 +1,39 @@
+<?php
+$type = $this->getRequest()->getParam('type');
+$position = $this->getPosition();
+?>
+<?php switch($type): case category: ?>
+	<?php if(Mage::helper('instantsearch/data')->isCategorySearchEnabled())
+		echo $this->getSearchCategoryHtml($type);
+	?>
+<?php break; case cms :?>
+	<?php if(Mage::helper('instantsearch/data')->isCmsSearchEnabled())
+		echo $this->getSearchCMSHtml($type);
+	?>
+<?php break; case blog :?>
+	<?php if(Mage::helper('instantsearch/data')->isBlogSearchEnabled())
+		echo $this->getSearchBlogHtml($type);
+	?>
+<?php break; case 0 :?>
+	<?php foreach ($position as $pos):?>
+		<?php switch($pos['title']): case product: ?>
+			<?php if(Mage::helper('instantsearch/data')->isProductSearchEnabled()):?>
+					<?= $this->getSearchProductHtml($type);?>
+			<?php endif?>
+		<?php break; case category :?>	
+			<?php if(Mage::helper('instantsearch/data')->isCategorySearchEnabled()):?>
+					<?= $this->getSearchCategoryHtml($type);?>
+			<?php endif?>
+		<?php break; case cms :?>
+			<?php if(Mage::helper('instantsearch/data')->isCmsSearchEnabled()):?>
+					<?= $this->getSearchCMSHtml($type);?>
+			<?php endif;?>
+		<?php break; case blog :?>
+			<?php if(Mage::helper('instantsearch/data')->isBlogSearchEnabled()):?>
+					<?= $this->getSearchBlogHtml($type);?>
+			<?php endif;?>
+		<?php break; endswitch; ?>
+		<br>
+		<br>
+	<?php endforeach?>
+<?php break; endswitch; ?>
