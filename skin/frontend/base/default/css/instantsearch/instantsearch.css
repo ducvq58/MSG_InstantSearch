@@ -7,6 +7,7 @@
 	border: 1px solid black;
 	padding: 5px;
 	text-align: left;
+	z-index: 1;
 }
 #search-dropdown p {
 	margin-bottom: 0;
